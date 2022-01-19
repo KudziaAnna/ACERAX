@@ -1,79 +1,61 @@
-# Actor-Critic with Experience Replay and autocorrelated actions
-This repository contains original implementation of **Actor-Critic with
- Experience Replay and autocorrelated actions** algorithm.
- Implementation of original **Actor-Critic with Experience Replay** is also present.
-## Installation
+# Actor-Critic with Experience Replay and and adaptation of action dispersion
 
-### Prerequisites
-**Python3** is required.  
-Note that, steps bellow won't install 
-all of the OpenAI Gym environments. Visit
-[OpenAI Gym repository](https://github.com/openai/gym) for more details.
+Repozytorium oparte na zawiera implementację 
+**Actor-Critic with Experience Replay and autocorrelated actions**, **Actor-Critic with Experience Replay** oraz **Actor-Critic with Experience Replay and and adaptation of action dispersion**.
 
-### Installation steps
-1. Create new virtual environment:
+## Instalacja
+
+Wymagany Python3
+
+1. Tworzenie wirtualnego środowiska
 ```shell script
 python3.7 -m venv {name}
 ```
-Note: it will create the environment folder in your current directory.
 
-2. Activate the virtual environment (should be run from the same directory as above
-or full path should be passed):
+2. Aktywacja wirtualnego środowiska:
 ```shell script
 source {name}/bin/activate 
 ```
-3. While in the repository's root directory, install the requirements:
+3. Instalacja wymaganych bibliotek:
 ```shell script
 pip install -r requirements.txt
 ``` 
 
-4. Run the agent:
+4. Wywołanie programu:
 ```shell script
 python run.py {args...}
 ``` 
 
-## Example runs
+## Przykładowe uruchomienia (wykorzystane do przeprowadzenia eksperymentów)
 
+Algorytm ACER
 ```shell script
-python acer/run.py --algo acer --env_name Pendulum-v0 --gamma 0.95 \
-    --lam 0.9 --b 3 --c0 0.3 --c 10 --actor_lr 0.001 --critic_lr 0.002  \
-    --actor_layers 20 --critic_layers 50 --memory_size 1000000 \
-    --num_parallel_envs 10  --actor_beta_penalty 0.1 --batches_per_env 10
+python acer/run.py --algo acer --env_name HalfCheetahBulletEnv-v0 \
+    --gamma 0.95 --lam 0.9 --b 3 --c0 0.3 --c 10 --actor_lr 0.001 --critic_lr 0.002 \
+    --actor_layers 20 --critic_layers 50 --memory_size 100000 --num_parallel_envs 10 \
+    --actor_beta_penalty 0.1 --batches_per_env 10 --max_time_steps 1000000
 ```
-
+Algprytm ACERAX
 ```shell script
-python3.7 acer/run.py --algo acerac --env_name HalfCheetahBulletEnv-v0 \
-    --gamma 0.99 --lam 0.9 --b 2 --c0 0.1 --c 10 --actor_lr 0.00003 --critic_lr 0.00006 \
-    --actor_layers 256 256  --critic_layers 256 256 --memory_size 1000000 \
-    --num_parallel_envs 10 --actor_beta_penalty 0.001 --batches_per_env 10 \
-    --num_evaluation_runs 5  --std 0.4  --max_time_steps 3000000 --tau 4 --alpha 0.5
+python3.7 acer/run.py --algo acerax --env_name HalfCheetahBulletEnv-v0 \
+    --gamma 0.95 --lam 0.9 --b 3 --c0 0.3 --c 10 --actor_lr 0.001 --critic_lr 0.002 \
+    --actor_layers 20 --critic_layers 50 --memory_size 100000 --num_parallel_envs 10 \
+    --actor_beta_penalty 0.1 --batches_per_env 10 --max_time_steps 1000000
 ```
 
-```shell script 
-python3.7 acer/run.py --algo acerax --env_name HalfCheetahBulletEnv-v0 --gamma 0.95 \
---lam 0.9 --b 3 --c0 0.3 --c 10 --actor_lr 0.001 --critic_lr 0.002 \
---actor_layers 20 --critic_layers 50 --memory_size 100000 \
---num_parallel_envs 10 --actor_beta_penalty 0.1 --batches_per_env 10 \
---max_time_steps 1000000
-```
-## Parameters
-TBA
-
-## TensorBoard
-During the training some statistics like 'loss', mean penalty value and return are being
-collected and logged into TensorBoard files (*logs/* folder).  
-To view the dashboard run
+Algorytm ACERAX ze zmienioną wielkością bufora memory_size
 ```shell script
-tensorboard --logdir logs
+python3.7 acer/run.py --algo acerax --env_name HalfCheetahBulletEnv-v0 \
+    --gamma 0.95 --lam 0.9 --b 3 --c0 0.3 --c 10 --actor_lr 0.001 --critic_lr 0.002 \
+    --actor_layers 20 --critic_layers 50 --memory_size 10000000 --num_parallel_envs 10 \
+    --actor_beta_penalty 0.1 --batches_per_env 10 --max_time_steps 1000000
 ```
-in the repository's root directory. The dashboard will be available in the browser under
-the addres http://localhost:6006/
-
 
 ## References
- 
-TBA
- 
+Wawrzyński, Paweł.
+"Reinforcement learning with experience replay and adaptation of action
+dispersion"
+
 Wawrzyński, Paweł.
 *Real-time reinforcement learning by sequential actor–critics
 and experience replay.*
@@ -83,7 +65,4 @@ Wawrzyński, Paweł, and Ajay Kumar Tanwani.
 *Autonomous reinforcement learning with experience replay.*
 Neural Networks 41 (2013): 156-167.
 
-Wawrzyński, Paweł. 
-*Reinforcement learning with experience replay for model-free humanoid walking optimization*
-International Journal of Humanoid Robotics 11.03 (2014): 1450024
 
